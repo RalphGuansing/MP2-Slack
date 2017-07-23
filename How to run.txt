@@ -1,0 +1,6 @@
+enter "python manage.py runserver [your ip address]:8000"
+
+
+*Cant connect, my host is not allowed*
+
+go to settings.py add your IP to ALLOWED_HOSTS = ['*your_ip*','*other_ip*']
