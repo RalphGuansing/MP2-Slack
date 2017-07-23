@@ -3,6 +3,7 @@
 {% block body%}
     <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
+
         {% include 'newbeginnings/form-template.html' %}
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">

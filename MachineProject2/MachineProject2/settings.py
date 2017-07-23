@@ -25,7 +25,7 @@ SECRET_KEY = 'leui8icpl+fp+_720a3^(5sb!1e@3(r*6d2unjy)(=(r@-b-c_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.1.5', '192.168.1.9', '192.168.1.2']
+ALLOWED_HOSTS = ['192.168.1.5', '192.168.1.9', '192.168.1.2','192.168.0.2','127.0.0.1']
 
 
 # Application definition

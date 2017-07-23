@@ -1,5 +1,6 @@
 from django.conf.urls import url
 
+
 from . import views
 
 urlpatterns = [
@@ -8,4 +9,6 @@ urlpatterns = [
     
     #Register
     url(r'^register/$', views.Register.as_view(), name='register'),
+	
+	
 ]
