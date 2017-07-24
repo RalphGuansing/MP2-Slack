@@ -1,6 +1,6 @@
 from django.shortcuts import HttpResponse, render
 from django.views import generic
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView, View
 from django.shortcuts import render
 from .models import User
 from newbeginnings.forms import UserForm
@@ -12,7 +12,7 @@ class IndexView(generic.ListView):
     def get_queryset(self):
         return User.objects.all()
     
-class Register(CreateView):
+class Register(View):
     model = User
     template_name = 'newbeginnings/user_form.html'
     fields = ['first_name', 'last_name', 'username', 'password', 'degree_program_or_office', 'profile_picture']
