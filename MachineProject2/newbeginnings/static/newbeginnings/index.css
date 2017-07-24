@@ -51,8 +51,9 @@ body {
 }
 
 img.item_photo{
-	width: 500px;
-	height: auto;
+	width: 100%;
+    object-fit: contain;
+    padding: 15px;
 }
 
 .post_userphoto {
