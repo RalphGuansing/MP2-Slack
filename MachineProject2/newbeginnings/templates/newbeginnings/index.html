@@ -1,16 +1,24 @@
 {% extends 'newbeginnings/base.html' %}
 
 {% block body%}
-    {% if users %}
-    <ul>
-    {% for user in users %}
-        <li>
-            <p>{{user.first_name}} {{user.last_name}}</p>
-
-        </li>
+    {% if posts %}
+    <div class="centerdiv">
+    {% for post in posts %}
+            <div class="post">
+                <div class="post_author">
+                    <img class="post_userphoto"src="{{post.user_id.profile_picture.url}}">
+                    {{post.user_id.username}}
+                </div>
+                <div class="post_item">
+                    {{post.item_name}}
+                </div>
+                <div class="post_img">
+                    <center><img class="item_photo "src="{{post.item_photo.url}}"></center>
+                </div>
+            </div> <br>
     {% endfor %}
-    </ul>
+    </div>
     {% else %}
-        <p> No users available</p>
+        <p> No posts available</p>
     {% endif %}
 {% endblock %}

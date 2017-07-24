@@ -23,3 +23,49 @@ body {
 .navbar-inverse .navbar-toggle:hover, .navbar-inverse .navbar-toggle:focus {
    background-color: darkgreen;
 }
+
+.centerdiv {
+	margin: 0%;
+    width: 100%;
+    padding: 10px;
+}
+
+.post {
+	width: 50%;
+    background-color: powderblue;
+	margin:0 auto;
+}
+
+.post_author {
+    font-weight: bold;
+	background-color: green;
+	color: gainsboro;
+	padding: 10px;
+}
+
+.post_item {
+    font-weight: bold;
+	background-color: lightgreen;
+	color: black;
+	padding: 10px;
+}
+
+img.item_photo{
+	width: 500px;
+	height: auto;
+}
+
+.post_userphoto {
+	width: auto;
+	height: 50px;
+}
+
+.post_img {
+    background-color: lightgreen;
+}
+
+
+
+
+
+
