@@ -10,7 +10,7 @@ class UserForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'username', 'password', 'degree_program_or_office', 'profile_picture')
+        fields = ('first_name', 'last_name', 'username', 'password','isStudent', 'degree_program_or_office', 'profile_picture')
         
 class UserLoginForm(forms.Form):
     User = get_user_model()
