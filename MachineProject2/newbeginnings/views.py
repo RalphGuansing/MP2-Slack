@@ -24,7 +24,7 @@ class Register(generic.CreateView):
     form_class = UserForm
     model = User
     template_name = 'newbeginnings/user_form.html'
-    fields = ['first_name', 'last_name', 'username', 'password', 'degree_program_or_office', 'profile_picture']
+    fields = ['first_name', 'last_name', 'username', 'password','isStudent', 'degree_program_or_office', 'profile_picture']
     
     #display blank form
     def get(self,request):

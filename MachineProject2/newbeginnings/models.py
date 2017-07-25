@@ -8,6 +8,7 @@ class User(models.Model):
     last_name = models.CharField(max_length=200)
     username = models.CharField(max_length=200)
     password = models.CharField(max_length=200)
+    isStudent = models.BooleanField(default=True)
     degree_program_or_office = models.CharField(max_length=200)
     profile_picture = models.FileField(blank=True,null=True)
     
