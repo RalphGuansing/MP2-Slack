@@ -17,8 +17,8 @@ class UserProfile(models.Model):
     def get_absolute_url(self):
         return reverse('index')
     
-    #def __str__(self):
-     #   return self.username +' ('+str(self.id)+') '
+    def __str__(self):
+        return self.user.username +' ('+str(self.id)+') '
     
 class Post(models.Model):
     user_id = models.ForeignKey(UserProfile,on_delete=models.CASCADE)
