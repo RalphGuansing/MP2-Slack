@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 
+from taggit.managers import TaggableManager
+
 class User(models.Model):
     first_name = models.CharField(max_length=200)
     last_name = models.CharField(max_length=200)
@@ -16,7 +18,7 @@ class User(models.Model):
         return reverse('index')
     
     def __str__(self):
-        return self.username
+        return self.username +' ('+str(self.id)+') '
     
 class Post(models.Model):
     user_id = models.ForeignKey(User,on_delete=models.CASCADE)
@@ -27,3 +29,10 @@ class Post(models.Model):
     item_condition = models.CharField(max_length=200)
     item_type = models.CharField(max_length=200)
     item_use = models.CharField(max_length=200)
+    tags = TaggableManager()
+    
+    def get_absolute_url(self):
+        return reverse('index')
+    
+    def __str__(self):
+        return self.item_name +' ('+str(self.id)+') '

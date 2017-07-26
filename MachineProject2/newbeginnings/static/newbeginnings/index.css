@@ -1,3 +1,16 @@
+a{
+	text-decoration: none;
+	font-size:15px;
+	font-weight: bold;
+	color: White;
+	cursor: pointer;
+}
+a:hover{
+	background-color: none;
+    text-decoration: none;
+    color: gainsboro;
+}
+
 body {
     background: whitesmoke;
 }
@@ -30,22 +43,42 @@ body {
     padding: 10px;
 }
 
+.profilediv {
+    padding: 30px;
+    padding-top: 0;
+}
+
+.innerdiv {
+    width: 50%;
+    background-color: lightgreen;
+	margin:0 auto;
+    padding: 50px;
+    
+}
+
 .post {
 	width: 50%;
-    background-color: powderblue;
+    background-color: orange;
 	margin:0 auto;
 }
 
 .post_author {
     font-weight: bold;
-	background-color: green;
-	color: gainsboro;
+	background-color: darkorange;
 	padding: 10px;
 }
 
+.post_author a{
+    color:black;
+}
+
+.post_author a:hover{
+    color:#505050;
+}
+
+
 .post_item {
     font-weight: bold;
-	background-color: lightgreen;
 	color: black;
 	padding: 10px;
 }
@@ -61,8 +94,43 @@ img.item_photo{
 	height: 50px;
 }
 
+.profile_picture {
+    width: auto;
+	max-height: 300px;
+}
+
 .post_img {
-    background-color: lightgreen;
+}
+
+#postButton {
+	background-color: #357AE8;
+	width: 40%;
+	margin:0 auto;	
+	border-radius: 10px;
+	cursor: pointer;
+}
+
+#postButton p {
+	text-align: center;
+	vertical-align: middle;
+	font-weight: bold;
+	color:white;
+	padding:40px;
+	
+}
+#postButton:hover {
+	background-color: #357FFF;
+}
+
+.tag_wrap {
+    padding: 10px;
+}
+
+.tag {
+    border-radius: 5px;
+    padding: 5px;
+    background-color: darkred;
+    display: inline-block;
 }
 
 

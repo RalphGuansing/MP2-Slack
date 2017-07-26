@@ -2,10 +2,15 @@
 
 {% block body%}
     {% if posts %}
+    <div class="profilediv">
+        <div>
+            <h2> All posts by {{user.first_name}} {{user.last_name}}</h2><p>({{user.username}})</p>
+        </div>
+    </div>
     <div class="centerdiv">
     {% include 'newbeginnings/post.html' %}
     </div>
-    {% else %}
+     {% else %}
         <p> No posts available</p>
     {% endif %}
 {% endblock %}

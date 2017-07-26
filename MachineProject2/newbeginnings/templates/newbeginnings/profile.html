@@ -1,0 +1,29 @@
+{% extends 'newbeginnings/base.html' %}
+
+{% block body%}
+    {% if user %}
+    <div class="profilediv">
+        <div>
+            <h2>{{user.first_name}} {{user.last_name}}</h2><p>({{user.username}})</p>
+            {% if user.profile_picture %}
+                <img class="profile_picture"src="{{user.profile_picture.url}}">
+            {% endif %}
+        </div>
+        <div>
+            {% if user.isStudent %}
+                <p>Degree: {{user.degree_program_or_office}}</p>
+            {% else %}
+                <p>Office: {{user.degree_program_or_office}}</p>
+            {% endif %}
+        </div>
+    </div>
+
+    {% if posts %}
+    <div class="centerdiv">
+        {% include 'newbeginnings/post.html' %}
+    </div>
+    {% endif %}
+    {% else %}
+        <p> user not available</p>
+    {% endif %}
+{% endblock %}

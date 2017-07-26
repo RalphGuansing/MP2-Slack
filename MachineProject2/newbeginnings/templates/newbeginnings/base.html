@@ -6,6 +6,8 @@
     <link rel="stylesheet" type="text/css" href="{% static 'newbeginnings/index.css' %}"/>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    {% block javascript%}
+    {% endblock %}
 </head>
 <body>
     <nav class="navbar navbar-inverse">
@@ -37,7 +39,7 @@
                 </form>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="">
-                        <a href="#">
+                        <a href="{% url 'post-add' %}">
                             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; Add Item
                         </a>
                     </li>

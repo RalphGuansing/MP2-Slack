@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     #third party
-    'crispy_forms'
+    'crispy_forms',
+    'taggit'
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
