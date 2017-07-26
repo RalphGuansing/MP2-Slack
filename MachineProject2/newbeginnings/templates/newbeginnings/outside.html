@@ -16,9 +16,17 @@
             </div>
             
             <!-- Items -->
-
+            <div class="collapse navbar-collapse" id="topNavBar">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="">
+                        <a href="{% url 'userregister' %}">Sign up</a>
+                    </li>
+                    <li class="">
+                        <a href="{% url 'login' %}">Log in</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-        
     </nav>
     {% block body%}
     {% endblock %}

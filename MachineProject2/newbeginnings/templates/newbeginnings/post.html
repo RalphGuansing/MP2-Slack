@@ -1,10 +1,7 @@
     {% for post in posts|slice:":10" %}
             <div class="post">
                 <div class="post_author">
-                    {% if post.user_id.profile_picture %}
-                    <img class="post_userphoto"src="{{post.user_id.profile_picture.url}}">
-                    {% endif %}
-                    <a href="{% url 'profile' post.user_id.id %}">{{post.user_id.user.username}}</a>
+                    <a href="{% url 'profile' post.user_id.id %}">{{post.user_id.username}}</a>
                 </div>
                 <div class="post_item">
                     {{post.item_name}}

@@ -1,6 +1,5 @@
 from django.contrib.auth.models import User
 from django import forms
-from .models import UserProfile
 from django.contrib.auth import authenticate, login, logout, get_user_model
 
 class UserForm(forms.ModelForm):
@@ -14,13 +13,7 @@ class UserForm(forms.ModelForm):
             'last_name': 'Degree Program/Office'
         }
         
-class UserProfileForm(forms.ModelForm):
-    class Meta:
-        model = UserProfile
-        fields = ('first_name', 'last_name','isStudent', 'degree_program_or_office', 'profile_picture')
-        labels = {
-            'isStudent': 'Are you a student?',
-        }
+
         
 class UserLoginForm(forms.Form):
     User = get_user_model()

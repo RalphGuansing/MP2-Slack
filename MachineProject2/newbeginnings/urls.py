@@ -4,6 +4,9 @@ from newbeginnings.views import (login_view)
 from . import views
 
 urlpatterns = [
+    #Welcome
+    url(r'^$', views.WelcomeView.as_view(), name='welcome'),
+    
     #Home
     url(r'^home/$', views.IndexView.as_view(), name='index'),
     
@@ -27,4 +30,8 @@ urlpatterns = [
     
     #tags
     url(r'^posts/tag/(?P<slug>[-\w]+)/$', views.TagView.as_view(),name='post-tag'),
+    
+    #logout
+    url(r"^logout/$", views.logout_view,name='logout'),
+    
 ]
