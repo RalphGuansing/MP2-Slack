@@ -1,16 +1,16 @@
 
 from django import forms
-from .models import User
+from .models import UserProfile
 from django.contrib.auth import authenticate, login, logout, get_user_model
 
 
 
 class UserForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput)
+
 
     class Meta:
-        model = User
-        fields = ('first_name', 'last_name', 'username', 'password','isStudent', 'degree_program_or_office', 'profile_picture')
+        model = UserProfile
+        fields = ('first_name', 'last_name','isStudent', 'degree_program_or_office', 'profile_picture')
         labels = {
             'isStudent': 'Are you a student?',
         }

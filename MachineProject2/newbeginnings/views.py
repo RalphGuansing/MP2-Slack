@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.views import generic
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, View
 from django.shortcuts import render
-from .models import User, Post
+from .models import UserProfile, Post
 from django.views.generic import View
 from newbeginnings.forms import UserForm, UserLoginForm
 from taggit.models import Tag
@@ -20,7 +20,7 @@ class IndexView(generic.ListView):
     
 class Register(generic.CreateView):
     form_class = UserForm
-    model = User
+    model = UserProfile
     template_name = 'newbeginnings/user_form.html'
     
     #display blank form
@@ -29,7 +29,7 @@ class Register(generic.CreateView):
         return render(request, self.template_name, {'form':form})
     
 def ProfileView(request, user_id):
-    user = get_object_or_404(User, pk=user_id)
+    user = get_object_or_404(UserProfile, pk=user_id)
     posts = list(Post.objects.filter(user_id=user_id))
     posts = list(reversed(posts))
     return render(request, 'newbeginnings/profile.html', {'user': user, 'posts': posts })
@@ -45,7 +45,7 @@ def login_view(request):
     return render(request, "newbeginnings/login.html",{"form":form, "title": title})
 
 def UserPostsView(request, user_id):
-    user = get_object_or_404(User, pk=user_id)
+    user = get_object_or_404(UserProfile, pk=user_id)
     posts = list(Post.objects.filter(user_id=user_id))
     return render(request, 'newbeginnings/userposts.html', {'user': user, 'posts': posts })
 
