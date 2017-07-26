@@ -21,4 +21,7 @@ urlpatterns = [
     
     #createposts
     url(r'^posts/add/$', views.CreatePostView.as_view(),name='post-add'),
+    
+    #tags
+    url(r'^posts/tag/(?P<slug>[-\w]+)/$', views.TagView.as_view(),name='post-tag'),
 ]

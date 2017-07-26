@@ -49,6 +49,13 @@ def UserPostsView(request, user_id):
     posts = list(Post.objects.filter(user_id=user_id))
     return render(request, 'newbeginnings/userposts.html', {'user': user, 'posts': posts })
 
+class TagView(generic.ListView):
+    template_name = 'newbeginnings/tag.html'
+    context_object_name = 'posts'
+    
+    def get_queryset(self):
+        return Post.objects.filter(tags__slug=self.kwargs.get('slug')).order_by('-id')
+
 class CreatePostView(generic.CreateView):
     model = Post
     fields = [

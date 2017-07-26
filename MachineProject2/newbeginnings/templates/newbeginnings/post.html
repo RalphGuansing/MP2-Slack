@@ -1,7 +1,7 @@
     {% for post in posts|slice:":10" %}
             <div class="post">
                 <div class="post_author">
-                    {% if user.profile_picture %}
+                    {% if post.user_id.profile_picture %}
                     <img class="post_userphoto"src="{{post.user_id.profile_picture.url}}">
                     {% endif %}
                     <a href="{% url 'profile' post.user_id.id %}">{{post.user_id.username}}</a>
@@ -16,7 +16,7 @@
                 {% endif %}
                 <div class="tag_wrap">
                     {% for tag in post.tags.all %}
-                        <div class="tag"><a>{{ tag.name }}</a></div>
+                        <a href="{% url 'post-tag' tag.slug %}"><div class="tag">{{ tag.name }}</div></a>
                     {% endfor %}
                 </div>
             </div> <br>

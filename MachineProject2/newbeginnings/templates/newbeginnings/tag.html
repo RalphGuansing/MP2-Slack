@@ -1,0 +1,11 @@
+{% extends 'newbeginnings/base.html' %}
+
+{% block body%}
+    {% if posts %}
+    <div class="centerdiv">
+    {% include 'newbeginnings/post.html' %}
+    </div>
+    {% else %}
+        <p> No posts available</p>
+    {% endif %}
+{% endblock %}
