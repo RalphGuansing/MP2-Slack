@@ -6,7 +6,7 @@ from django.shortcuts import render
 from .models import User, Post
 from django.views.generic import View
 from newbeginnings.forms import UserForm, UserLoginForm
-
+from taggit.models import Tag
 
 
 
@@ -55,6 +55,13 @@ class TagView(generic.ListView):
     
     def get_queryset(self):
         return Post.objects.filter(tags__slug=self.kwargs.get('slug')).order_by('-id')
+    
+    def get_context_data(self, **kwargs):
+        context = super(TagView, self).get_context_data(**kwargs)
+        context['name'] = Tag.objects.filter(slug=self.kwargs.get('slug'))
+        # Add any other variables to the context here
+        ...
+        return context
 
 class CreatePostView(generic.CreateView):
     model = Post

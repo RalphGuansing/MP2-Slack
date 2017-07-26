@@ -2,6 +2,9 @@
 
 {% block body%}
     {% if posts %}
+    {% for n in name %}
+        <div class="profilediv"><h1>{{ n.name }}</h1></div>
+    {% endfor %}
     <div class="centerdiv">
     {% include 'newbeginnings/post.html' %}
     </div>
