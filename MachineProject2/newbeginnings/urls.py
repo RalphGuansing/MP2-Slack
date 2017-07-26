@@ -7,8 +7,11 @@ urlpatterns = [
     #Home
     url(r'^home/$', views.IndexView.as_view(), name='index'),
     
+    #UserRegister
+    url(r'^register/$', views.UserFormView.as_view(), name='userregister'),
+    
     #Register
-    url(r'^register/$', views.Register.as_view(), name='register'),
+   # url(r'^register/$', views.Register.as_view(), name='register'),
     
     #login
     url(r'^login/$', login_view, name='login'),
