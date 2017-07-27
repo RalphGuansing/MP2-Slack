@@ -6,6 +6,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView, View
 from django.views.generic.base import TemplateView
 from django.shortcuts import render
 from .models import Post
+from django.core.paginator import Paginator
 from django.views.generic import View
 from newbeginnings.forms import UserForm, UserLoginForm
 from taggit.models import Tag
@@ -51,22 +52,32 @@ class UserFormView(View):
 class IndexView(generic.ListView):
     template_name = 'newbeginnings/index.html'
     context_object_name = 'posts'
+    paginate_by = 10
+    queryset = Post.objects.all().order_by('-id')
     
-    def get_queryset(self):
-        return Post.objects.all().order_by('-id')
+    def get_paginate_by(self, queryset):
+        return self.request.GET.get('paginate_by', self.paginate_by)
     
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
         context["loggeduser"] = self.request.user.id
 
         return context
+
     
+class ProfileView(generic.ListView):
+    template_name = 'newbeginnings/profile.html'
+    context_object_name = 'posts'
+    paginate_by = 5
     
-def ProfileView(request, user_id):
-    user = get_object_or_404(User, pk=user_id)
-    posts = list(Post.objects.filter(user_id=user_id))
-    posts = list(reversed(posts))
-    return render(request, 'newbeginnings/profile.html', {'user': user, 'posts': posts, 'loggeduser':request.user.id })
+    def get_queryset(self, **kwargs):
+        return Post.objects.filter(user_id=self.kwargs['user_id']).order_by('-id')
+    
+    def get_context_data(self, **kwargs):
+        context = super(ProfileView, self).get_context_data(**kwargs)
+        context["loggeduser"] = self.request.user.id
+        context["user"] = get_object_or_404(User, pk=self.kwargs['user_id'])
+        return context
 
 class WelcomeView(TemplateView):
     template_name= 'newbeginnings/welcome.html'
@@ -86,11 +97,15 @@ def login_view(request):
 def UserPostsView(request, user_id):
     user = get_object_or_404(User, pk=user_id)
     posts = list(Post.objects.filter(user_id=user_id))
-    return render(request, 'newbeginnings/userposts.html', {'user': user, 'posts': posts })
+    return render(request, 'newbeginnings/userposts.html', {'user': user, 'posts': posts, 'loggeduser':request.user.id })
 
 class TagView(generic.ListView):
-    template_name = 'newbeginnings/tag.html'
+    template_name = 'newbeginnings/index.html'
     context_object_name = 'posts'
+    paginate_by = 10
+    
+    def get_paginate_by(self, queryset):
+        return self.request.GET.get('paginate_by', self.paginate_by)
     
     def get_queryset(self):
         return Post.objects.filter(tags__slug=self.kwargs.get('slug')).order_by('-id')

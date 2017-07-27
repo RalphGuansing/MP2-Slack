@@ -13,14 +13,11 @@ urlpatterns = [
     #UserRegister
     url(r'^register/$', views.UserFormView.as_view(), name='userregister'),
     
-    #Register
-   # url(r'^register/$', views.Register.as_view(), name='register'),
-    
     #login
     url(r'^login/$', login_view, name='login'),
 	
     #user
-	url(r'^user/(?P<user_id>[0-9]+)/$', views.ProfileView,name='profile'),
+	url(r'^user/(?P<user_id>[0-9]+)/$', views.ProfileView.as_view(),name='profile'),
     
     #allposts
     url(r'^user/(?P<user_id>[0-9]+)/posts/$', views.UserPostsView,name='userposts'),
