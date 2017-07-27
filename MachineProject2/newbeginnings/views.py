@@ -10,6 +10,7 @@ from django.core.paginator import Paginator
 from django.views.generic import View
 from newbeginnings.forms import UserForm, UserLoginForm
 from taggit.models import Tag
+from django.template.defaultfilters import slugify
 
 def logout_view(request):
     logout(request)
@@ -136,4 +137,36 @@ class CreatePostView(generic.CreateView):
         context = super(CreatePostView, self).get_context_data(**kwargs)
         context["loggeduser"] = self.request.user.id
         return context
+    
+    
+class SearchTagView(generic.ListView):
+    template_name = 'newbeginnings/index.html'
+    context_object_name = 'posts'
+    paginate_by = 10
+    
+    def get_paginate_by(self, queryset):
+        return self.request.GET.get('paginate_by', self.paginate_by)
+    
+    def get_queryset(self):
+        return Post.objects.filter(tags__slug=slugify(self.request.GET.get("q", None))).order_by('-id')
+
+    
+    def get_context_data(self, **kwargs):
+        context = super(SearchTagView, self).get_context_data(**kwargs)
+        context['name'] = Tag.objects.filter(slug=slugify(self.request.GET.get("q", None)))
+        context["loggeduser"] = self.request.user.id
+        return context
+
+class PostView(generic.ListView):
+    template_name = 'newbeginnings/post_details.html'
+    context_object_name = 'posts'
+    
+    def get_queryset(self, **kwargs):
+        return Post.objects.filter(id=self.kwargs['post_id'])
+    
+    def get_context_data(self, **kwargs):
+        context = super(PostView, self).get_context_data(**kwargs)
+        context["loggeduser"] = self.request.user.id
+        return context
+
 

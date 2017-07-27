@@ -146,4 +146,7 @@ img.item_photo{
     display: none;
 }
 
+.post_item a{
+    color:black;
+}
 

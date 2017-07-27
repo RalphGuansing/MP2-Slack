@@ -1,0 +1,34 @@
+{% extends 'newbeginnings/base.html' %}
+
+{% block body%}
+{% for post in posts %}
+    {% if post %}
+    <div class="centerdiv">
+          <div class="post">
+                <div class="post_author">
+                    <a href="{% url 'profile' post.user_id.id %}">{{post.user_id.username}}</a>
+                </div>
+                <div class="post_item">
+                    <h3><strong>{{post.item_name}}</strong></h3>
+                
+                    Quantity: {{post.item_quantity}}<br>
+                
+                    Condition: {{post.item_condition}} <br>
+                
+                    Use: {{post.item_use}} <br>
+                </div>
+                {% if post.item_photo %}
+                <div class="post_img">
+                    <center><img class="item_photo "src="{{post.item_photo.url}}"></center>
+                </div>
+                {% endif %}
+                <div class="tag_wrap">
+                    {% for tag in post.tags.all %}
+                        <a href="{% url 'post-tag' tag.slug %}"><div class="tag">{{ tag.name }}</div></a>
+                    {% endfor %}
+                </div>
+            </div>
+    </div>
+    {% endif %}
+{% endfor %}
+{% endblock %}

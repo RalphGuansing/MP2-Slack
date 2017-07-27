@@ -4,7 +4,7 @@
                     <a href="{% url 'profile' post.user_id.id %}">{{post.user_id.username}}</a>
                 </div>
                 <div class="post_item">
-                    {{post.item_name}}
+                     <a href="{% url 'post' post.id %}">{{post.item_name}}</a>
                 </div>
                 {% if post.item_photo %}
                 <div class="post_img">
