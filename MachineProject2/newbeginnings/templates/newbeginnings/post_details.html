@@ -18,10 +18,15 @@
                     Type: {{post.item_type}} <br>
                 
                     Use: {{post.item_use}} <br>
+                    
+                    {% if post.item_use == "Academic" %}    
+                        {{post.user_id.last_name}}
+                    {% endif %}
+                    
                 </div>
                 {% if post.item_photo %}
                 <div class="post_img">
-                    <center><img class="item_photo "src="{{post.item_photo.url}}"></center>
+                    <center><img class="item_photo" id="image" src="{{post.item_photo.url}}"></center>
                 </div>
                 {% endif %}
                 <div class="tag_wrap">
