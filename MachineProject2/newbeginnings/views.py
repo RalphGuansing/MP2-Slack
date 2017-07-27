@@ -44,7 +44,7 @@ class UserFormView(View):
                 
                 if user.is_active:
                     login(request,user)
-                    return render(request, 'newbeginnings/welcome.html', {'form':form})
+                    return HttpResponseRedirect('/home/')
                 
         return render(request, self.template_name,{'form':form})
         
@@ -74,9 +74,12 @@ class WelcomeView(TemplateView):
 def login_view(request):
     title = "Login"
     form = UserLoginForm(request.POST or None)
+    
     if form.is_valid():
         username = form.cleaned_data.get("username")
         password = form.cleaned_data.get("password")
+        user= authenticate(username=username, password=password)
+        login(request,user)
         return HttpResponseRedirect('/home/')
     return render(request, "newbeginnings/login.html",{"form":form, "title": title})
 
