@@ -16,9 +16,8 @@
                         <a href="{% url 'post-tag' tag.slug %}"><div class="tag">{{ tag.name }}</div></a>
                     {% endfor %}
                 </div>
-            </div> <br>
+            </div>
     {% endfor %}
-
         <div class="paginate_div">
             {% if is_paginated %}
               <ul class="pagination">
@@ -42,9 +41,3 @@
               </ul>
             {% endif %}
         </div>
-
-            <!--{% if posts|length > 10 %}
-            <a href="{% url 'userposts' user.id %}">
-                <div id="postButton"><p>I want more posts</p></div>
-            </a>
-            {% endif %}
