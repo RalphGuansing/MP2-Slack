@@ -17,11 +17,11 @@
                 
                     Quantity: {{post.item_quantity}}<br>
                 
-                    Condition: {{post.item_condition}} <br>
+                    Condition: <a href="{% url 'post-condition' post.item_condition_slug %}">{{post.item_condition}}</a> <br>
                     
-                    Type: {{post.item_type}} <br>
+                    Type: <a href="{% url 'post-type' post.item_type_slug %}">{{post.item_type}}</a> <br>
                 
-                    Use: {{post.item_use}} <br>
+                    Use: <a href="{% url 'post-use' post.item_use_slug %}">{{post.item_use}}</a> <br>
                     
                     {% if post.item_use == "Academic" %}    
                         {{post.user_id.last_name}}

@@ -22,7 +22,7 @@ urlpatterns = [
     #allposts
     url(r'^user/(?P<user_id>[0-9]+)/posts/$', views.UserPostsView,name='userposts'),
     
-     #createposts
+    #createposts
     url(r'^posts/(?P<post_id>[0-9]+)/$', views.PostView.as_view(),name='post'),
     
     #createposts
@@ -31,9 +31,21 @@ urlpatterns = [
     #tags
     url(r'^posts/tag/(?P<slug>[-\w]+)/$', views.TagView.as_view(),name='post-tag'),
     
+    #condition
+    url(r'^posts/condition/(?P<condition>[-\w]+)/$', views.ConditionView.as_view(),name='post-condition'),
+    
+    #type
+    url(r'^posts/type/(?P<type>[-\w]+)/$', views.TypeView.as_view(),name='post-type'),
+    
+    #use
+    url(r'^posts/use/(?P<use>[-\w]+)/$', views.UseView.as_view(),name='post-use'),
+    
     #searchtag
     url(r'^posts/search/tag/$', views.SearchTagView.as_view(),name='searchTag'),
     
+    #searchcondition
+   # url(r'^posts/search/tag/$', views.SearchTagView.as_view(),name='searchTag'),
+
     #logout
     url(r"^logout/$", views.logout_view,name='logout'),
     

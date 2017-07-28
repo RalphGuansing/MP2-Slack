@@ -113,7 +113,7 @@ class TagView(generic.ListView):
     
     def get_context_data(self, **kwargs):
         context = super(TagView, self).get_context_data(**kwargs)
-        context['name'] = Tag.objects.filter(slug=self.kwargs.get('slug'))
+        context['name'] = Tag.objects.filter(slug=self.kwargs.get('slug'))[:1].get().name
         context["loggeduser"] = self.request.user.id
         return context
 
@@ -153,7 +153,58 @@ class SearchTagView(generic.ListView):
     
     def get_context_data(self, **kwargs):
         context = super(SearchTagView, self).get_context_data(**kwargs)
-        context['name'] = Tag.objects.filter(slug=slugify(self.request.GET.get("q", None)))
+        context['name'] = Tag.objects.filter(slug=slugify(self.request.GET.get("q", None)))[:1].get().name
+        context["loggeduser"] = self.request.user.id
+        return context
+    
+class ConditionView(generic.ListView):
+    template_name = 'newbeginnings/index.html'
+    context_object_name = 'posts'
+    paginate_by = 10
+    
+    def get_paginate_by(self, queryset):
+        return self.request.GET.get('paginate_by', self.paginate_by)
+    
+    def get_queryset(self):
+        return Post.objects.filter(item_condition_slug=self.kwargs.get('condition')).order_by('-id')
+    
+    def get_context_data(self, **kwargs):
+        context = super(ConditionView, self).get_context_data(**kwargs)
+        context['name'] = Post.objects.filter(item_condition_slug=self.kwargs.get('condition'))[:1].get().item_condition
+        context["loggeduser"] = self.request.user.id
+        return context
+    
+class TypeView(generic.ListView):
+    template_name = 'newbeginnings/index.html'
+    context_object_name = 'posts'
+    paginate_by = 10
+    
+    def get_paginate_by(self, queryset):
+        return self.request.GET.get('paginate_by', self.paginate_by)
+    
+    def get_queryset(self):
+        return Post.objects.filter(item_type_slug=self.kwargs.get('type')).order_by('-id')
+    
+    def get_context_data(self, **kwargs):
+        context = super(TypeView, self).get_context_data(**kwargs)
+        context['name'] = Post.objects.filter(item_type_slug=self.kwargs.get('type'))[:1].get().item_type
+        context["loggeduser"] = self.request.user.id
+        return context
+    
+class UseView(generic.ListView):
+    template_name = 'newbeginnings/index.html'
+    context_object_name = 'posts'
+    paginate_by = 10
+    
+    def get_paginate_by(self, queryset):
+        return self.request.GET.get('paginate_by', self.paginate_by)
+    
+    def get_queryset(self):
+        return Post.objects.filter(item_use_slug=self.kwargs.get('use')).order_by('-id')
+    
+    def get_context_data(self, **kwargs):
+        context = super(UseView, self).get_context_data(**kwargs)
+        context['name'] = Post.objects.filter(item_use_slug=self.kwargs.get('use'))[:1].get().item_use
         context["loggeduser"] = self.request.user.id
         return context
 
