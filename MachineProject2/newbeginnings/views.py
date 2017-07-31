@@ -5,7 +5,7 @@ from django.views import generic
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, View
 from django.views.generic.base import TemplateView
 from django.shortcuts import render
-from .models import Post
+from .models import Post, Offer
 from django.core.paginator import Paginator
 from django.views.generic import View
 from newbeginnings.forms import UserForm, UserLoginForm
@@ -220,4 +220,11 @@ class PostView(generic.ListView):
         context["loggeduser"] = self.request.user.id
         return context
 
-
+class MakeOfferView(generic.CreateView):
+    template_name = 'newbeginnings/makeoffer.html'
+    model = Offer
+    fields = ['isPurchase', 'purchase_offer', 'exchange_offer']
+    
+    def get_context_data(self, **kwargs):
+        context = super(MakeOfferView, self).get_context_data(**kwargs)
+        context["loggeduser"] = self.request.user.id
