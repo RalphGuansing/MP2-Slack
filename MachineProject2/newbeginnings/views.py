@@ -218,6 +218,7 @@ class PostView(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super(PostView, self).get_context_data(**kwargs)
         context["loggeduser"] = self.request.user.id
+        context["offers"] = Offer.objects.filter(post_id=self.kwargs['post_id'])
         return context
 
 class MakeOfferView(generic.CreateView):

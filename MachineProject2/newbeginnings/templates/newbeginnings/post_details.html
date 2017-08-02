@@ -53,6 +53,24 @@
                     {% endfor %}
                 </div>
             </div>
+        <div class="offerTab"><h2>Offers:</h2></div>
+        {% for offer in offers %}
+        <div class="offer">
+            <div class="offer_author">
+                    <a href="{% url 'profile' offer.user_id.id %}">{{offer.user_id.username}}</a>
+                </div>
+                {% if offer.isPurchase %}
+                <div class="offer_item">
+                    Offered Amount: Php {{offer.purchase_offer}}
+                </div>
+                {% else %}
+                <div class="offer_item">
+                    Offered Item: <a href="{% url 'post' offer.exchange_offer.id %}">{{offer.exchange_offer.item_name}}</a>
+                </div>
+                {% endif %}
+
+        </div>
+        {% endfor %}
     </div>
 
     <script>

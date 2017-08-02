@@ -257,3 +257,42 @@ img.item_photo{
     }
 }
 
+.offer {
+	width: 50%;
+    background-color: lightgray;
+	margin:0 auto;
+    margin-top: 20px;
+}
+
+.offer_author {
+    font-weight: bold;
+	background-color: gray;
+	padding: 10px;
+}
+
+.offer_author a{
+    color:black;
+}
+
+.offer_author a:hover{
+    color:#505050;
+}
+
+.offer_item {
+    font-weight: bold;
+	color: black;
+	padding: 10px;
+}
+
+.offer_item a{
+    color:black;
+}
+
+.offerTab {
+	width: 50%;
+    background-color: lightgray;
+	margin:0 auto;
+    margin-top: 20px;
+    padding: 10px;
+}
+
