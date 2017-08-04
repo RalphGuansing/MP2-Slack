@@ -57,11 +57,14 @@ class IndexView(generic.ListView):
     queryset = Post.objects.all().order_by('-id')
     
     def get_paginate_by(self, queryset):
-        return self.request.GET.get('paginate_by', self.paginate_by)
+        self.paginate_by = self.request.GET.get('paginate_by', self.paginate_by)
+        return self.paginate_by
     
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
         context["loggeduser"] = self.request.user.id
+        context["offers"] = Offer.objects.filter(post_id__user_id = self.request.user.id).order_by('-id')
+        context["itemcount"] = self.request.GET.get('paginate_by', self.paginate_by)
 
         return context
 
@@ -78,6 +81,7 @@ class ProfileView(generic.ListView):
         context = super(ProfileView, self).get_context_data(**kwargs)
         context["loggeduser"] = self.request.user.id
         context["user"] = get_object_or_404(User, pk=self.kwargs['user_id'])
+        context["offers"] = Offer.objects.filter(post_id__user_id = self.request.user.id).order_by('-id')
         return context
 
 class WelcomeView(TemplateView):
@@ -115,6 +119,8 @@ class TagView(generic.ListView):
         context = super(TagView, self).get_context_data(**kwargs)
         context['name'] = Tag.objects.filter(slug=self.kwargs.get('slug'))[:1].get().name
         context["loggeduser"] = self.request.user.id
+        context["offers"] = Offer.objects.filter(post_id__user_id = self.request.user.id).order_by('-id')
+        context["itemcount"] = self.request.GET.get('paginate_by', self.paginate_by)
         return context
 
 class CreatePostView(generic.CreateView):
@@ -136,6 +142,7 @@ class CreatePostView(generic.CreateView):
     def get_context_data(self, **kwargs):
         context = super(CreatePostView, self).get_context_data(**kwargs)
         context["loggeduser"] = self.request.user.id
+        context["offers"] = Offer.objects.filter(post_id__user_id = self.request.user.id).order_by('-id')
         return context
     
     
@@ -155,6 +162,8 @@ class SearchTagView(generic.ListView):
         context = super(SearchTagView, self).get_context_data(**kwargs)
         context['name'] = Tag.objects.filter(slug=slugify(self.request.GET.get("q", None)))[:1].get().name
         context["loggeduser"] = self.request.user.id
+        context["offers"] = Offer.objects.filter(post_id__user_id = self.request.user.id).order_by('-id')
+        context["itemcount"] = self.request.GET.get('paginate_by', self.paginate_by)
         return context
     
 class ConditionView(generic.ListView):
@@ -172,6 +181,8 @@ class ConditionView(generic.ListView):
         context = super(ConditionView, self).get_context_data(**kwargs)
         context['name'] = Post.objects.filter(item_condition_slug=self.kwargs.get('condition'))[:1].get().item_condition
         context["loggeduser"] = self.request.user.id
+        context["offers"] = Offer.objects.filter(post_id__user_id = self.request.user.id).order_by('-id')
+        context["itemcount"] = self.request.GET.get('paginate_by', self.paginate_by)
         return context
     
 class TypeView(generic.ListView):
@@ -189,6 +200,8 @@ class TypeView(generic.ListView):
         context = super(TypeView, self).get_context_data(**kwargs)
         context['name'] = Post.objects.filter(item_type_slug=self.kwargs.get('type'))[:1].get().item_type
         context["loggeduser"] = self.request.user.id
+        context["offers"] = Offer.objects.filter(post_id__user_id = self.request.user.id).order_by('-id')
+        context["itemcount"] = self.request.GET.get('paginate_by', self.paginate_by)
         return context
     
 class UseView(generic.ListView):
@@ -206,6 +219,8 @@ class UseView(generic.ListView):
         context = super(UseView, self).get_context_data(**kwargs)
         context['name'] = Post.objects.filter(item_use_slug=self.kwargs.get('use'))[:1].get().item_use
         context["loggeduser"] = self.request.user.id
+        context["offers"] = Offer.objects.filter(post_id__user_id = self.request.user.id).order_by('-id')
+        context["itemcount"] = self.request.GET.get('paginate_by', self.paginate_by)
         return context
 
 class PostView(generic.ListView):
@@ -218,7 +233,8 @@ class PostView(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super(PostView, self).get_context_data(**kwargs)
         context["loggeduser"] = self.request.user.id
-        context["offers"] = Offer.objects.filter(post_id=self.kwargs['post_id'])
+        context["offersonpost"] = Offer.objects.filter(post_id=self.kwargs['post_id']).order_by('-id')
+        context["offers"] = Offer.objects.filter(post_id__user_id = self.request.user.id).order_by('-id')
         return context
 
 class MakeOfferView(generic.CreateView):

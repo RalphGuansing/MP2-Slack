@@ -19,7 +19,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{% url 'index' %}">NewBeginnings</a>
+                <a class="navbar-brand" href="{% url 'index' %}">NewBeginnings {{ paginate_by }}</a>
             </div>
             
             <!-- Items -->
@@ -30,6 +30,47 @@
                         <a href="{% url 'profile' loggeduser %}">
                             <span class="" aria-hidden="true"></span>&nbsp; My Profile
                         </a>
+                        {% endif %}
+                    </li>
+                    
+                    <li class="">
+                        {% if loggeduser %}
+                        <div class="dropdown">
+                            <button class="btn btn-success dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">
+                            <span class="glyphicon glyphicon-briefcase"></span></button>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                                {% for offer in offers %}
+                                <li role="presentation">
+                                        <div class="panel panel-success">
+                                            <div class="panel-heading">
+                                                <strong> <a href="{% url 'profile' offer.user_id.id %}" class="offer_notif">{{offer.user_id.username}}</a></strong> offer on your <a href="{% url 'post' offer.post_id.id %}" class="offer_notif">{{offer.post_id.item_name}}</a>
+                                                <ul class="nav navbar-nav navbar-right">
+                                                    <li class="">
+                                                        <a href="" class="offer_notif"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp;</a>
+                                                    </li>
+                                                    <li class="">
+                                                         <a href="" class="offer_notif"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;</a>    
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="panel-body">
+                                                {% if offer.isPurchase %}
+                                                <div class="offer_item">
+                                                    Offered Amount: Php {{offer.purchase_offer}}
+                                                </div>
+                                                {% else %}
+                                                <div class="offer_item" >
+                                                    Offered Item: <a href="{% url 'post' offer.exchange_offer.id %}">{{offer.exchange_offer.item_name}}</a>
+                                                </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                </li>
+                                {% endfor %}
+    
+
+                            </ul>
+                          </div>
                         {% endif %}
                     </li>
                 </ul>
