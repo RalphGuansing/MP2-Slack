@@ -38,7 +38,8 @@
                         <div class="dropdown">
                             <button class="btn btn-success dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">
                             <span class="glyphicon glyphicon-briefcase"></span></button>
-                            <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="menu1" id="style-4">
+                                {% if offers %}
                                 {% for offer in offers %}
                                 <li role="presentation">
                                         <div class="panel panel-success">
@@ -67,6 +68,11 @@
                                         </div>
                                 </li>
                                 {% endfor %}
+                                {% else %}
+                                <li>
+                                    <div class="panel panel-success"><div class="panel-heading">No offers at the moment</div></div>
+                                </li>
+                                {% endif %}
     
 
                             </ul>

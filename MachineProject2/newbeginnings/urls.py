@@ -45,6 +45,18 @@ urlpatterns = [
     
     #searchcondition
    # url(r'^posts/search/tag/$', views.SearchTagView.as_view(),name='searchTag'),
+    
+    #createoffer
+    url(r'^posts/(?P<post_id>[0-9]+)/offers/add/$', views.CreateOfferView.as_view(),name='offer-add'),
+    
+    #editoffer
+    #url(r'^posts/(?P<post_id>[0-9]+)/offers/add/$', views.CreateOfferView.as_view(),name='offer-add'),
+    
+    #editoffer
+    url(r'^posts/(?P<post_id>[0-9]+)/offers/edit/(?P<offer_id>[0-9]+)/$', views.UpdateOfferView.as_view(),name='offer-edit'),
+    
+    #deleteoffer
+    url(r'^posts/(?P<post_id>[0-9]+)/offers/delete/(?P<offer_id>[0-9]+)/$', views.DeleteOfferView.as_view(),name='offer-delete'),
 
     #logout
     url(r"^logout/$", views.logout_view,name='logout'),

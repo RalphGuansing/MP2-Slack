@@ -11,6 +11,7 @@ from django.views.generic import View
 from newbeginnings.forms import UserForm, UserLoginForm
 from taggit.models import Tag
 from django.template.defaultfilters import slugify
+from django.core.urlresolvers import reverse, reverse_lazy
 
 def logout_view(request):
     logout(request)
@@ -237,11 +238,48 @@ class PostView(generic.ListView):
         context["offers"] = Offer.objects.filter(post_id__user_id = self.request.user.id).order_by('-id')
         return context
 
-class MakeOfferView(generic.CreateView):
-    template_name = 'newbeginnings/makeoffer.html'
+class CreateOfferView(generic.CreateView):
+    model = Offer
+    fields = ['isPurchase', 'purchase_offer', 'exchange_offer']
+        
+    def form_valid(self, form):
+        form.instance.user_id = self.request.user
+        form.instance.post_id = get_object_or_404(Post, pk=self.kwargs["post_id"])
+        return super(CreateOfferView, self).form_valid(form)
+    
+    def get_context_data(self, **kwargs):
+        context = super(CreateOfferView, self).get_context_data(**kwargs)
+        context["loggeduser"] = self.request.user.id
+        return context
+    
+class UpdateOfferView(generic.UpdateView):
     model = Offer
     fields = ['isPurchase', 'purchase_offer', 'exchange_offer']
     
+    def get_object(self, queryset=None):
+        obj = Offer.objects.get(id=self.kwargs['offer_id'])
+        return obj
+    
     def get_context_data(self, **kwargs):
-        context = super(MakeOfferView, self).get_context_data(**kwargs)
+        context = super(UpdateOfferView, self).get_context_data(**kwargs)
         context["loggeduser"] = self.request.user.id
+        #context["post_id"] = Offer.objects.get(id=self.kwargs['offer_id']).post_id.id
+        return context
+    
+    
+class DeleteOfferView(generic.DeleteView):
+    model = Offer
+    
+    def get_object(self, queryset=None):
+        obj = Offer.objects.get(id=self.kwargs['offer_id'])
+        return obj
+    
+    def get_context_data(self, **kwargs):
+        context = super(DeleteOfferView, self).get_context_data(**kwargs)
+        context["loggeduser"] = self.request.user.id
+        #context["post_id"] = Offer.objects.get(id=self.kwargs['offer_id']).post_id.id
+        return context
+    
+    def get_success_url(self):
+        # Assuming there is a ForeignKey from Comment to Post in your model 
+        return reverse( 'post', kwargs={'post_id': self.object.post_id.pk})

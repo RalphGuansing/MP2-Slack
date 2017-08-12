@@ -1,5 +1,5 @@
 from django.db import models
-from django.core.urlresolvers import reverse
+from django.core.urlresolvers import reverse, reverse_lazy
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 from taggit.managers import TaggableManager
@@ -38,4 +38,9 @@ class Offer(models.Model):
     
     def __str__(self):
         return "offer of " + self.user_id.username +' to post '+str(self.post_id)+' (' +str(self.id)+") "
+    
+    def get_absolute_url(self):
+        return reverse('post', args=[str(self.post_id.id)])
+    
+
     
