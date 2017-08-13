@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #third party
     'crispy_forms',
-    'taggit'
+    'taggit',
+    'smart_selects'
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'

@@ -10,6 +10,56 @@
     {% endblock %}
 </head>
 <body>
+    
+    {% for offer in offers %}
+    <div id="accept{{ offer.id }}" class="modal fade" role="dialog" data-backdrop="false">
+        <div class="modal-dialog">
+            <div class="modal-content panel-success">
+                <div class="modal-header panel-heading">
+                    Accepting offer of {{ offer.user_id.username }}:
+                    {% if offer.isPurchase %}
+                    <a href="" style="color:green">Php {{offer.purchase_offer}}</a>
+                    {% else %}
+                    <a href="{% url 'post' offer.exchange_offer.id %}" style="color:green">{{offer.exchange_offer.item_name}}</a>
+                    {% endif %}
+                    <button type="buton" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <form method="post" action="{% url 'AcceptOffer' offer.id%}">
+                    {% csrf_token %}
+                    <div class="modal-body form-group">
+                        <textarea rows="4" class="form-control" name="offertext"></textarea>
+                    </div>
+                    <div class="modal-footer"><button type="buton" class="btn btn-success">Submit</button></div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    
+    {% for offer in offers %}
+    <div id="decline{{ offer.id }}" class="modal fade" role="dialog" data-backdrop="false">
+        <div class="modal-dialog">
+            <div class="modal-content panel-danger">
+                <div class="modal-header panel-heading">
+                    Declining offer of {{ offer.user_id.username }}:
+                    {% if offer.isPurchase %}
+                    <a href="" style="color:red">Php {{offer.purchase_offer}}</a>
+                    {% else %}
+                    <a href="{% url 'post' offer.exchange_offer.id %}" style="color:red">{{offer.exchange_offer.item_name}}</a>
+                    {% endif %}
+                    <button type="buton" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <form method="post" action="{% url 'DeclineOffer' offer.id%}">
+                    {% csrf_token %}
+                    <div class="modal-body form-group">
+                        <textarea rows="4" class="form-control" name="offertext"></textarea>
+                    </div>
+                    <div class="modal-footer"><button type="buton" class="btn btn-danger">Submit</button></div>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <!--logo-->
@@ -47,10 +97,10 @@
                                                 <strong> <a href="{% url 'profile' offer.user_id.id %}" class="offer_notif">{{offer.user_id.username}}</a></strong> offer on your <a href="{% url 'post' offer.post_id.id %}" class="offer_notif">{{offer.post_id.item_name}}</a>
                                                 <ul class="nav navbar-nav navbar-right">
                                                     <li class="">
-                                                        <a href="" class="offer_notif"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp;</a>
+                                                        <a href="" class="offer_notif" data-toggle="modal" data-target="#accept{{ offer.id }}"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp;</a>
                                                     </li>
                                                     <li class="">
-                                                         <a href="" class="offer_notif"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;</a>    
+                                                         <a href="" class="offer_notif" data-toggle="modal" data-target="#decline{{ offer.id }}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp;</a>    
                                                     </li>
                                                 </ul>
                                             </div>
@@ -110,8 +160,9 @@
                 
             </div>
         </div>
-        
+                                                
     </nav>
+                                                
     {% block body%}
     {% endblock %}
 </body>

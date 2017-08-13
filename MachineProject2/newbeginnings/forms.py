@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from .models import Post, Offer
 from django import forms
 from django.contrib.auth import authenticate, login, logout, get_user_model
 
@@ -12,7 +13,16 @@ class UserForm(forms.ModelForm):
             'first_name': 'Name',
             'last_name': 'Degree Program/Office'
         }
-        
+
+class OfferForm(forms.ModelForm):
+    class Meta:
+        model = Offer
+        exclude = ('user_id','post_id','isAccept')
+    
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user')
+        super(OfferForm, self).__init__(*args, **kwargs)
+        self.fields['exchange_offer'].queryset = Post.objects.filter(user_id__id=self.user.id)
 
         
 class UserLoginForm(forms.Form):

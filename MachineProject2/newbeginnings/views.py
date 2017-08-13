@@ -8,7 +8,7 @@ from django.shortcuts import render
 from .models import Post, Offer
 from django.core.paginator import Paginator
 from django.views.generic import View
-from newbeginnings.forms import UserForm, UserLoginForm
+from newbeginnings.forms import UserForm, UserLoginForm, OfferForm
 from taggit.models import Tag
 from django.template.defaultfilters import slugify
 from django.core.urlresolvers import reverse, reverse_lazy
@@ -238,10 +238,11 @@ class PostView(generic.ListView):
         context["offers"] = Offer.objects.filter(post_id__user_id = self.request.user.id).order_by('-id')
         return context
 
+    
 class CreateOfferView(generic.CreateView):
-    model = Offer
-    fields = ['isPurchase', 'purchase_offer', 'exchange_offer']
-        
+    form_class = OfferForm
+    template_name = 'newbeginnings/offer_form.html'
+    
     def form_valid(self, form):
         form.instance.user_id = self.request.user
         form.instance.post_id = get_object_or_404(Post, pk=self.kwargs["post_id"])
@@ -252,9 +253,14 @@ class CreateOfferView(generic.CreateView):
         context["loggeduser"] = self.request.user.id
         return context
     
+    def get_form_kwargs(self):
+        kwargs = super(CreateOfferView, self).get_form_kwargs()
+        kwargs.update({'user': self.request.user})
+        return kwargs
+    
 class UpdateOfferView(generic.UpdateView):
-    model = Offer
-    fields = ['isPurchase', 'purchase_offer', 'exchange_offer']
+    form_class = OfferForm
+    template_name = 'newbeginnings/offer_form.html'
     
     def get_object(self, queryset=None):
         obj = Offer.objects.get(id=self.kwargs['offer_id'])
@@ -265,6 +271,11 @@ class UpdateOfferView(generic.UpdateView):
         context["loggeduser"] = self.request.user.id
         #context["post_id"] = Offer.objects.get(id=self.kwargs['offer_id']).post_id.id
         return context
+    
+    def get_form_kwargs(self):
+        kwargs = super(UpdateOfferView, self).get_form_kwargs()
+        kwargs.update({'user': self.request.user})
+        return kwargs
     
     
 class DeleteOfferView(generic.DeleteView):
@@ -283,3 +294,18 @@ class DeleteOfferView(generic.DeleteView):
     def get_success_url(self):
         # Assuming there is a ForeignKey from Comment to Post in your model 
         return reverse( 'post', kwargs={'post_id': self.object.post_id.pk})
+    
+    
+def AcceptOffer(request, offer_id):
+    offer = Offer.objects.get(pk = offer_id)
+    offer.isAccept = True
+    offer.reason = request.POST.get('offertext', None)
+    offer.save()
+    return redirect('index')
+
+def DeclineOffer(request, offer_id):
+    offer = Offer.objects.get(pk = offer_id)
+    offer.isAccept = False
+    offer.reason = request.POST.get('offertext', None)
+    offer.save()
+    return redirect('index')

@@ -6,6 +6,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     url(r'^', include('newbeginnings.urls')),
     url(r'^admin/', admin.site.urls),
+    url(r'^chaining/', include('smart_selects.urls')),
 ]
 
 if settings.DEBUG:

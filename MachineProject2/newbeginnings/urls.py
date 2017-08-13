@@ -10,6 +10,12 @@ urlpatterns = [
     #Home
     url(r'^home/$', views.IndexView.as_view(), name='index'),
     
+    #AcceptOffer
+    url(r'^home/offer/(?P<offer_id>[0-9]+)/accepted/$', views.AcceptOffer, name='AcceptOffer'),
+    
+    #DeclineOffer
+    url(r'^home/offer/(?P<offer_id>[0-9]+)/declined/$', views.DeclineOffer, name='DeclineOffer'),
+    
     #UserRegister
     url(r'^register/$', views.UserFormView.as_view(), name='userregister'),
     
