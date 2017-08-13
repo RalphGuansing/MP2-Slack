@@ -14,14 +14,26 @@ class UserForm(forms.ModelForm):
             'last_name': 'Degree Program/Office'
         }
 
-class OfferForm(forms.ModelForm):
+class OfferPurchaseForm(forms.ModelForm):
     class Meta:
         model = Offer
-        exclude = ('user_id','post_id','isAccept','reason')
+        fields = ('purchase_offer',)
+        #exclude = ('user_id','post_id','isAccept','reason','isPurchase')
     
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user')
-        super(OfferForm, self).__init__(*args, **kwargs)
+        super(OfferPurchaseForm, self).__init__(*args, **kwargs)
+        #self.fields['exchange_offer'].queryset = Post.objects.filter(user_id__id=self.user.id)
+        
+class OfferExchangeForm(forms.ModelForm):
+    class Meta:
+        model = Offer
+        fields = ('exchange_offer',)
+        #exclude = ('user_id','post_id','isAccept','reason','isPurchase')
+    
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user')
+        super(OfferExchangeForm, self).__init__(*args, **kwargs)
         self.fields['exchange_offer'].queryset = Post.objects.filter(user_id__id=self.user.id)
 
         

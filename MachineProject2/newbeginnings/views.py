@@ -8,7 +8,7 @@ from django.shortcuts import render
 from .models import Post, Offer
 from django.core.paginator import Paginator
 from django.views.generic import View
-from newbeginnings.forms import UserForm, UserLoginForm, OfferForm
+from newbeginnings.forms import UserForm, UserLoginForm, OfferPurchaseForm, OfferExchangeForm
 from taggit.models import Tag
 from django.template.defaultfilters import slugify
 from django.core.urlresolvers import reverse, reverse_lazy
@@ -239,27 +239,48 @@ class PostView(generic.ListView):
         return context
 
     
-class CreateOfferView(generic.CreateView):
-    form_class = OfferForm
+class CreatePurchaseOfferView(generic.CreateView):
+    form_class = OfferPurchaseForm
     template_name = 'newbeginnings/offer_form.html'
     
     def form_valid(self, form):
+        form.instance.isPurchase = True
         form.instance.user_id = self.request.user
         form.instance.post_id = get_object_or_404(Post, pk=self.kwargs["post_id"])
-        return super(CreateOfferView, self).form_valid(form)
+        return super(CreatePurchaseOfferView, self).form_valid(form)
     
     def get_context_data(self, **kwargs):
-        context = super(CreateOfferView, self).get_context_data(**kwargs)
+        context = super(CreatePurchaseOfferView, self).get_context_data(**kwargs)
         context["loggeduser"] = self.request.user.id
         return context
     
     def get_form_kwargs(self):
-        kwargs = super(CreateOfferView, self).get_form_kwargs()
+        kwargs = super(CreatePurchaseOfferView, self).get_form_kwargs()
         kwargs.update({'user': self.request.user})
         return kwargs
     
-class UpdateOfferView(generic.UpdateView):
-    form_class = OfferForm
+class CreateExchangeOfferView(generic.CreateView):
+    form_class = OfferExchangeForm
+    template_name = 'newbeginnings/offer_form.html'
+    
+    def form_valid(self, form):
+        form.instance.isPurchase = False
+        form.instance.user_id = self.request.user
+        form.instance.post_id = get_object_or_404(Post, pk=self.kwargs["post_id"])
+        return super(CreateExchangeOfferView, self).form_valid(form)
+    
+    def get_context_data(self, **kwargs):
+        context = super(CreateExchangeOfferView, self).get_context_data(**kwargs)
+        context["loggeduser"] = self.request.user.id
+        return context
+    
+    def get_form_kwargs(self):
+        kwargs = super(CreateExchangeOfferView, self).get_form_kwargs()
+        kwargs.update({'user': self.request.user})
+        return kwargs
+    
+class UpdatePurchaseOfferView(generic.UpdateView):
+    form_class = OfferPurchaseForm
     template_name = 'newbeginnings/offer_form.html'
     
     def get_object(self, queryset=None):
@@ -267,13 +288,32 @@ class UpdateOfferView(generic.UpdateView):
         return obj
     
     def get_context_data(self, **kwargs):
-        context = super(UpdateOfferView, self).get_context_data(**kwargs)
+        context = super(UpdatePurchaseOfferView, self).get_context_data(**kwargs)
         context["loggeduser"] = self.request.user.id
         #context["post_id"] = Offer.objects.get(id=self.kwargs['offer_id']).post_id.id
         return context
     
     def get_form_kwargs(self):
-        kwargs = super(UpdateOfferView, self).get_form_kwargs()
+        kwargs = super(UpdatePurchaseOfferView, self).get_form_kwargs()
+        kwargs.update({'user': self.request.user})
+        return kwargs
+
+class UpdateExchangeOfferView(generic.UpdateView):
+    form_class = OfferExchangeForm
+    template_name = 'newbeginnings/offer_form.html'
+    
+    def get_object(self, queryset=None):
+        obj = Offer.objects.get(id=self.kwargs['offer_id'])
+        return obj
+    
+    def get_context_data(self, **kwargs):
+        context = super(UpdateExchangeOfferView, self).get_context_data(**kwargs)
+        context["loggeduser"] = self.request.user.id
+        #context["post_id"] = Offer.objects.get(id=self.kwargs['offer_id']).post_id.id
+        return context
+    
+    def get_form_kwargs(self):
+        kwargs = super(UpdateExchangeOfferView, self).get_form_kwargs()
         kwargs.update({'user': self.request.user})
         return kwargs
     

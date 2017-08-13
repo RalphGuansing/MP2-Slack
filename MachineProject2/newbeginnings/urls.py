@@ -52,14 +52,20 @@ urlpatterns = [
     #searchcondition
    # url(r'^posts/search/tag/$', views.SearchTagView.as_view(),name='searchTag'),
     
-    #createoffer
-    url(r'^posts/(?P<post_id>[0-9]+)/offers/add/$', views.CreateOfferView.as_view(),name='offer-add'),
+    #createpurchaseoffer
+    url(r'^posts/(?P<post_id>[0-9]+)/offers/add/purchase/$', views.CreatePurchaseOfferView.as_view(),name='offer-add-purchase'),
+    
+    #createexchangeoffer
+    url(r'^posts/(?P<post_id>[0-9]+)/offers/add/exchange/$', views.CreateExchangeOfferView.as_view(),name='offer-add-exchange'),
     
     #editoffer
     #url(r'^posts/(?P<post_id>[0-9]+)/offers/add/$', views.CreateOfferView.as_view(),name='offer-add'),
     
-    #editoffer
-    url(r'^posts/(?P<post_id>[0-9]+)/offers/edit/(?P<offer_id>[0-9]+)/$', views.UpdateOfferView.as_view(),name='offer-edit'),
+    #editpurchaseoffer
+    url(r'^posts/(?P<post_id>[0-9]+)/offers/edit/purchase/(?P<offer_id>[0-9]+)/$', views.UpdatePurchaseOfferView.as_view(),name='offer-edit-purchase'),
+    
+    #editexchangeoffer
+    url(r'^posts/(?P<post_id>[0-9]+)/offers/edit/exchange/(?P<offer_id>[0-9]+)/$', views.UpdateExchangeOfferView.as_view(),name='offer-edit-exchange'),
     
     #deleteoffer
     url(r'^posts/(?P<post_id>[0-9]+)/offers/delete/(?P<offer_id>[0-9]+)/$', views.DeleteOfferView.as_view(),name='offer-delete'),

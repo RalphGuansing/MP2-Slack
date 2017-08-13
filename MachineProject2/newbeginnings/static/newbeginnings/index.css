@@ -342,10 +342,16 @@ ul.nav li a.offer_notif:hover{
     color: lightgreen;
 }
 
-.offerbutton{
- float: right;
- display: inline-block;
+.offerbutton, dropdown{
+    float: right;
+    display: inline-block;
+    padding:0;
 }
+.drop2{
+    min-width: 100px;
+}
+
+
 
 /*
  *  STYLE 4
