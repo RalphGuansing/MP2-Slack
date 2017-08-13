@@ -17,7 +17,7 @@ class UserForm(forms.ModelForm):
 class OfferForm(forms.ModelForm):
     class Meta:
         model = Offer
-        exclude = ('user_id','post_id','isAccept')
+        exclude = ('user_id','post_id','isAccept','reason')
     
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user')
